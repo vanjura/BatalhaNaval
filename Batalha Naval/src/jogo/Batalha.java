@@ -346,7 +346,6 @@ public class Batalha {
                     JOptionPane.showMessageDialog(null, "Este navio está sem energia.");
                     navio = 0;
                 }
-                System.out.println(navio+ "-"+player.getNavio()[navio].status);
             } catch (NumberFormatException e) {
                 if (option == null) {
                     System.exit(0);

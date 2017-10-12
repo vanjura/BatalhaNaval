@@ -16,11 +16,13 @@ public class Habilidade {
     protected String nome;
     protected String descricao;
     protected String tipo;
+    protected int consumo;
 
-    public Habilidade(String nome, String descricao, String tipo) {
+    public Habilidade(String nome, String descricao, String tipo, int consumo) {
         this.nome = nome;
         this.descricao = descricao;
         this.tipo = tipo;
+        this.consumo = consumo;
     }
 
     public void mostrarHabilidade() {

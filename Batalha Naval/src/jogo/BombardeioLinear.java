@@ -9,10 +9,10 @@ package jogo;
  *
  * @author Vanjura
  */
-public class BombardeioLinear extends Habilidade{
-    
+public class BombardeioLinear extends Habilidade {
+
     public BombardeioLinear() {
-        super("Bombardeio Linear", "Atinge todos os quadrados ao longo de uma linha ou coluna.", "Agressivo (8x1 ou 1x8)");
+        super("Bombardeio Linear", "Atinge todos os quadrados ao longo de uma linha ou coluna.", "Agressivo (8x1 ou 1x8)", 40);
     }
-    
+
 }

@@ -12,7 +12,7 @@ package jogo;
 public class Artilharia extends Habilidade{
     
     public Artilharia() {
-        super("Artilharia", "Atinge uma área maior que um tiro normal.", "Agressivo (2x2)");
+        super("Artilharia", "Atinge uma área maior que um tiro normal.", "Agressivo (2x2)", 10);
     }
     
 }

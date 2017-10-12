@@ -14,7 +14,7 @@ public class MissilBalistico extends Habilidade {
     public MissilBalistico() {
         super("Míssil Balístico", "Destrói todos os quadrados na área afetada,\n"
                 + "porém faz com que todos os jogadores descubram onde está a sua\n"
-                + "fragata.", "Agressivo (5x5)");
+                + "fragata.", "Agressivo (5x5)", 30);
     }
 
 }

@@ -13,7 +13,7 @@ public class PulsoEletromagnetico extends Habilidade{
     
     public PulsoEletromagnetico() {
         super("Pulso Eletromagnetico", "Desabilita todos os navios de um\n"
-                + "jogador por duas rodadas.", "Cuzona (14x14)");
+                + "jogador por duas rodadas.", "Cuzona (14x14)", 150);
     }
     
 }

@@ -10,10 +10,10 @@ package jogo;
  * @author Vanjura
  */
 public class Sonar extends Habilidade {
-    
+
     public Sonar() {
         super("Sonar", "Revela a posição de qualquer navio (incluindo\n"
-                + "submarinos) que estejam na área afetada.", "Reconhecimento (5x5)");
+                + "submarinos) que estejam na área afetada.", "Reconhecimento (5x5)", 50);
     }
-    
+
 }

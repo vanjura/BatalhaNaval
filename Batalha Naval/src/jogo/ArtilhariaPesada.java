@@ -9,9 +9,9 @@ package jogo;
  *
  * @author Vanjura
  */
-public class ArtilhariaPesada extends Habilidade{
-    
+public class ArtilhariaPesada extends Habilidade {
+
     public ArtilhariaPesada() {
-        super("Artilharia Pesada", "Atinge uma área maior que um tiro normal.", "Agressivo (3x3)");
+        super("Artilharia Pesada", "Atinge uma área maior que um tiro normal.", "Agressivo (3x3)", 15);
     }
 }

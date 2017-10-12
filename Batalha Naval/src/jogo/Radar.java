@@ -9,11 +9,11 @@ package jogo;
  *
  * @author Vanjura
  */
-public class Radar extends Habilidade{
-    
+public class Radar extends Habilidade {
+
     public Radar() {
         super("Radar", "Esta habilidade encontra navios na superfície em uma\n"
-                + "grande área, porém não pode encontrar submarinos.", "Reconhecimento (5x5)");
+                + "grande área, porém não pode encontrar submarinos.", "Reconhecimento (5x5)", 40);
     }
-    
+
 }
