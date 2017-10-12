@@ -25,6 +25,9 @@ public class Batalha {
                     navio = escolherNavio(player[t[i]]);
                     if (navio != 6) {
                         habilidade = escolherHabilidade(player[t[i]], navio);
+                        if (habilidade != -1) {
+                            chamarHabilidade(player[t[i]], navio, habilidade);
+                        }
                         if (navio == 0 && habilidade == 0) {
                             usarEscudo(player[t[i]]);
                         } else if (navio == 1 && habilidade == 0) {
@@ -168,9 +171,6 @@ public class Batalha {
         if (player.getNavio()[navio].energia >= 5) {
             player.getNavio()[navio].consumirEnergia(player.getNavio()[navio]);
             mostrarInimigo(inimigo.verInimigo(inimigo), inimigo);
-            if (habilidade != -1) {
-                chamarHabilidade(player, navio, habilidade);
-            }
             if (habilidade == -1) {
                 player.getNavio()[navio].atirar(player, inimigo);
             } else if (navio == 1 && habilidade == 0) {
