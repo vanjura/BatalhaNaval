@@ -20,8 +20,6 @@ public class Navio {
     protected String inicial;
     protected String papel;
     protected Habilidade[] habilidade;
-    protected final int MAXPOINTS = 1000;
-    protected final int TOTALN = 6;
     protected int status = 1; //0 = inativo, 1 = ativo
 
     public Navio(int tamC, int tamA, String nome, String papel, String inicial) {
@@ -47,7 +45,7 @@ public class Navio {
         this.habilidade[1] = h1;
     }
 
-    public void consumirEnergia(Navio navio,int quantidade) {
+    public void consumirEnergia(Navio navio, int quantidade) {
         navio.energia -= quantidade;
     }
 
@@ -87,7 +85,7 @@ public class Navio {
             }
         } while (opcaoI == 0);
         if (opcaoI == 1) {
-            valor = Integer.parseInt(JOptionPane.showInputDialog("Informe a linha:")) - 1;
+            valor = pegarCoordenada(1, inimigo.getNavio()[5].habilidade[0], "linha");
             for (int i = 0; i < 14; i++) {
                 if (inimigo.getTabuleiro().getPosMatV(valor, i) == 0) {
                     if (!"-".equals(inimigo.getTabuleiro().getPosMatN(valor, i)) && !"X".equals(inimigo.getTabuleiro().getPosMatN(valor, i))) {
@@ -102,7 +100,7 @@ public class Navio {
                 }
             }
         } else if (opcaoI == 2) {
-            valor = Integer.parseInt(JOptionPane.showInputDialog("Informe a coluna:")) - 1;
+            valor = pegarCoordenada(1, inimigo.getNavio()[5].habilidade[0], "coluna");
             for (int i = 0; i < 14; i++) {
                 if (inimigo.getTabuleiro().getPosMatV(i, valor) == 0) {
                     if (!"-".equals(inimigo.getTabuleiro().getPosMatN(i, valor)) && !"X".equals(inimigo.getTabuleiro().getPosMatN(i, valor))) {
@@ -195,46 +193,14 @@ public class Navio {
     }
 
     public void usarArtilhariaPesada(Jogador player, Jogador inimigo) {
-        int linha = -1;
-        int coluna = -1;
+        int linha;
+        int coluna;
         int escudo = 0;
         int acerto = 0;
         String opcao;
 
-        do {
-            opcao = JOptionPane.showInputDialog("Informe a linha para usar a Artilharia:");
-            try {
-                linha = Integer.parseInt(opcao) - 1;
-                if (linha < 1 || linha > 12) {
-                    linha = -1;
-                    JOptionPane.showMessageDialog(null, "Essa habilidade não pode ser usada nesse local ou esse local não existe no tabuleiro."
-                            + "\nTamanho da habilidade: 3x3");
-                }
-            } catch (NumberFormatException e) {
-                if (opcao == null) {
-                    System.exit(0);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Informe somente números.");
-                }
-            }
-        } while (linha == -1);
-        do {
-            opcao = JOptionPane.showInputDialog("Informe a coluna para usar a Artilharia:");
-            try {
-                coluna = Integer.parseInt(opcao) - 1;
-                if (coluna < 1 || coluna > 12) {
-                    coluna = -1;
-                    JOptionPane.showMessageDialog(null, "Essa habilidade não pode ser usada nesse local ou esse local não existe no tabuleiro."
-                            + "\nTamanho da habilidade: 3x3");
-                }
-            } catch (NumberFormatException e) {
-                if (opcao == null) {
-                    System.exit(0);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Informe somente números.");
-                }
-            }
-        } while (linha == -1);
+        linha = pegarCoordenada(3, inimigo.getNavio()[4].habilidade[1], "linha");
+        coluna = pegarCoordenada(3, inimigo.getNavio()[4].habilidade[1], "coluna");
         for (int i = linha - 1; i < linha + 2; i++) {
             for (int j = coluna - 1; j < coluna + 2; j++) {
                 if (inimigo.getTabuleiro().getPosMatV(linha, coluna) == 0) {
@@ -260,8 +226,8 @@ public class Navio {
 
     public void usarRadar(Jogador inimigo) {
         int x, y, teste = 0;
-        x = Integer.parseInt(JOptionPane.showInputDialog("Informe a linha do meio para o Radar:")) - 1;
-        y = Integer.parseInt(JOptionPane.showInputDialog("Informe a coluna do meio para o Radar:")) - 1;
+        x = pegarCoordenada(5, inimigo.getNavio()[3].habilidade[1], "linha");
+        y = pegarCoordenada(5, inimigo.getNavio()[3].habilidade[1], "coluna");
         for (int i = x - 2; i < x + 3; i++) {
             for (int j = y - 2; j < y + 3; j++) {
                 if ("S".equals(inimigo.getTabuleiro().getPosMatN(i, j))) {
@@ -277,8 +243,8 @@ public class Navio {
 
     public void usarCargasDeProfundidade(Jogador player, Jogador inimigo) {
         int x, y, teste = 0;
-        x = Integer.parseInt(JOptionPane.showInputDialog("Informe a linha do meio para lançar as Cargas:")) - 1;
-        y = Integer.parseInt(JOptionPane.showInputDialog("Informe a coluna do meio para lançar as Cargas:")) - 1;
+        x = pegarCoordenada(5, inimigo.getNavio()[3].habilidade[0], "linha");
+        y = pegarCoordenada(5, inimigo.getNavio()[3].habilidade[0], "coluna");
         for (int i = x - 2; i < x + 3; i++) {
             for (int j = y - 2; j < y + 3; j++) {
                 if (inimigo.getTabuleiro().getPosMatV(x, y) == 0) {
@@ -308,8 +274,8 @@ public class Navio {
             }
         }
         int x, y, teste = 0;
-        x = Integer.parseInt(JOptionPane.showInputDialog("Informe a linha do meio para lançar o Missil Balistico:")) - 1;
-        y = Integer.parseInt(JOptionPane.showInputDialog("Informe a coluna do meio para lançar o Missil Balistico:")) - 1;
+        x = pegarCoordenada(5, inimigo.getNavio()[2].habilidade[1], "linha");
+        y = pegarCoordenada(5, inimigo.getNavio()[2].habilidade[1], "coluna");
         for (int i = x - 2; i < x + 3; i++) {
             for (int j = y - 2; j < y + 3; j++) {
                 if (inimigo.getTabuleiro().getPosMatV(x, y) == 0) {
@@ -335,8 +301,8 @@ public class Navio {
 
     public void usarFoguetes(Jogador player, Jogador inimigo) {
         int x, y, rand, teste = 0;
-        x = Integer.parseInt(JOptionPane.showInputDialog("Informe a linha do meio para lançar os Foguetes:")) - 1;
-        y = Integer.parseInt(JOptionPane.showInputDialog("Informe a coluna do meio para lançar os Foguetes:")) - 1;
+        x = pegarCoordenada(5, inimigo.getNavio()[2].habilidade[0], "linha");
+        y = pegarCoordenada(5, inimigo.getNavio()[2].habilidade[0], "coluna");
         for (int i = x - 2; i < x + 3; i++) {
             for (int j = y - 2; j < y + 3; j++) {
                 rand = (int) (Math.random() * 2);
@@ -365,8 +331,8 @@ public class Navio {
 
     public void usarSonar(Jogador inimigo) {
         int x, y;
-        x = Integer.parseInt(JOptionPane.showInputDialog("Informe a linha do meio para o Sonar:")) - 1;
-        y = Integer.parseInt(JOptionPane.showInputDialog("Informe a coluna do meio para o Sonar:")) - 1;
+        x = pegarCoordenada(5, inimigo.getNavio()[1].habilidade[1], "linha");
+        y = pegarCoordenada(5, inimigo.getNavio()[1].habilidade[1], "coluna");
         for (int i = x - 2; i < x + 3; i++) {
             for (int j = y - 2; j < y + 3; j++) {
                 if (!"-".equals(inimigo.getTabuleiro().getPosMatN(i, j)) && !"X".equals(inimigo.getTabuleiro().getPosMatN(i, j))) {
@@ -378,8 +344,8 @@ public class Navio {
 
     public void atirar(Jogador player, Jogador inimigo) {
         int x, y;
-        x = Integer.parseInt(JOptionPane.showInputDialog("Informe a linha que deseja atirar:")) - 1;
-        y = Integer.parseInt(JOptionPane.showInputDialog("Informe a coluna que deseja atirar:")) - 1;
+        x = pegarCoordenada(1, null, "linha");
+        y = pegarCoordenada(1, null, "coluna");
         if (inimigo.getTabuleiro().getPosMatV(x, y) == 0) {
             if ("-".equals(inimigo.getTabuleiro().getPosMatN(x, y)) || "X".equals(inimigo.getTabuleiro().getPosMatN(x, y))) {
                 JOptionPane.showMessageDialog(null, "Você errou e o inimigo ganhou +30 de energia em cada navio.");
@@ -393,6 +359,52 @@ public class Navio {
             JOptionPane.showMessageDialog(null, "Você acertou um escudo inimigo.");
             inimigo.getTabuleiro().setPosMatV(x, y, inimigo.getTabuleiro().getPosMatV(x, y) - 1);
         }
+    }
+
+    public int pegarCoordenada(int tamanho, Habilidade habilidade, String orientacao) {
+        int calc = tamanho / 2;
+        System.out.println("calc = " + calc);
+        int coordenada = -1;
+        String opcao;
+        if (habilidade == null) {
+            do {
+                opcao = JOptionPane.showInputDialog("Informe a " + orientacao + " que deseja atirar:");
+                try {
+                    coordenada = Integer.parseInt(opcao);
+                    if (coordenada < 1 || coordenada > 14) {
+                        coordenada = -1;
+                        JOptionPane.showMessageDialog(null, "Esse local não existe no tabuleiro.");
+                    }
+                } catch (NumberFormatException e) {
+                    if (opcao == null) {
+                        System.exit(0);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Informe somente números.");
+                        coordenada = -1;
+                    }
+                }
+            } while (coordenada == -1);
+        } else {
+            do {
+                opcao = JOptionPane.showInputDialog("Informe a " + orientacao + " que deseja usar a habilidade " + habilidade.nome + ":");
+                try {
+                    coordenada = Integer.parseInt(opcao);
+                    if (coordenada < 1 + calc || coordenada > 14 - calc) {
+                        coordenada = -1;
+                        JOptionPane.showMessageDialog(null, "Essa habilidade não pode ser usada nesse local ou esse local não existe no tabuleiro."
+                                + "\nTamanho da habilidade: " + tamanho + "x" + tamanho);
+                    }
+                } catch (NumberFormatException e) {
+                    if (opcao == null) {
+                        System.exit(0);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Informe somente números.");
+                        coordenada = -1;
+                    }
+                }
+            } while (coordenada == -1);
+        }
+        return coordenada - 1;
     }
 
     public String getMensagem() {
@@ -478,7 +490,7 @@ public class Navio {
                     } else if ("X".equals(inimigo.getTabuleiro().getPosMatN(i, y))) {
                     } else {
                         teste = 1;
-                        explosaoTorpedo(i, y,inimigo);
+                        explosaoTorpedo(i, y, inimigo);
                         break;
                     }
                 }
@@ -490,7 +502,7 @@ public class Navio {
                     } else if ("X".equals(inimigo.getTabuleiro().getPosMatN(i, y))) {
                     } else {
                         teste = 1;
-                        explosaoTorpedo(i, y,inimigo);
+                        explosaoTorpedo(i, y, inimigo);
                         break;
                     }
                 }
@@ -502,7 +514,7 @@ public class Navio {
                     } else if ("X".equals(inimigo.getTabuleiro().getPosMatN(x, i))) {
                     } else {
                         teste = 1;
-                        explosaoTorpedo(x, i,inimigo);
+                        explosaoTorpedo(x, i, inimigo);
                         break;
                     }
                 }
@@ -514,7 +526,7 @@ public class Navio {
                     } else if ("X".equals(inimigo.getTabuleiro().getPosMatN(x, i))) {
                     } else {
                         teste = 1;
-                        explosaoTorpedo(x, i,inimigo);
+                        explosaoTorpedo(x, i, inimigo);
                         break;
                     }
                 }
@@ -550,7 +562,7 @@ public class Navio {
         for (int i = linha; i < (linha + 3); i++) {
             for (int j = coluna; j < (coluna + 3); j++) {
                 inimigo.getTabuleiro().setPosMatN(i, j, "X");
-                System.out.println(i+","+j);
+                System.out.println(i + "," + j);
                 System.out.println(inimigo.getTabuleiro().getPosMatN(i, j));
             }
         }
