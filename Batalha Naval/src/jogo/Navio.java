@@ -478,7 +478,7 @@ public class Navio {
                     } else if ("X".equals(inimigo.getTabuleiro().getPosMatN(i, y))) {
                     } else {
                         teste = 1;
-                        inimigo.getTabuleiro().setPosMatN(i, y, "X");
+                        explosaoTorpedo(i, y,inimigo);
                         break;
                     }
                 }
@@ -490,7 +490,7 @@ public class Navio {
                     } else if ("X".equals(inimigo.getTabuleiro().getPosMatN(i, y))) {
                     } else {
                         teste = 1;
-                        inimigo.getTabuleiro().setPosMatN(i, y, "X");
+                        explosaoTorpedo(i, y,inimigo);
                         break;
                     }
                 }
@@ -502,7 +502,7 @@ public class Navio {
                     } else if ("X".equals(inimigo.getTabuleiro().getPosMatN(x, i))) {
                     } else {
                         teste = 1;
-                        inimigo.getTabuleiro().setPosMatN(x, i, "X");
+                        explosaoTorpedo(x, i,inimigo);
                         break;
                     }
                 }
@@ -514,7 +514,7 @@ public class Navio {
                     } else if ("X".equals(inimigo.getTabuleiro().getPosMatN(x, i))) {
                     } else {
                         teste = 1;
-                        inimigo.getTabuleiro().setPosMatN(x, i, "X");
+                        explosaoTorpedo(x, i,inimigo);
                         break;
                     }
                 }
@@ -531,6 +531,28 @@ public class Navio {
             JOptionPane.showMessageDialog(null, "O Torpedo não conseguiu acertar nenhum navio inimigo."
                     + "\n" + inimigo.getApelido() + " ganhou +30 de energia em todos os navios.");
             inimigo.jogadorErrou();
+        }
+    }
+
+    public void explosaoTorpedo(int linha, int coluna, Jogador inimigo) {
+        if (linha < 1) {
+            linha++;
+        } else if (linha > 12) {
+            linha--;
+        }
+        if (coluna < 1) {
+            coluna++;
+        } else if (coluna > 12) {
+            coluna--;
+        }
+        coluna--;
+        linha--;
+        for (int i = linha; i < (linha + 3); i++) {
+            for (int j = coluna; j < (coluna + 3); j++) {
+                inimigo.getTabuleiro().setPosMatN(i, j, "X");
+                System.out.println(i+","+j);
+                System.out.println(inimigo.getTabuleiro().getPosMatN(i, j));
+            }
         }
     }
 
