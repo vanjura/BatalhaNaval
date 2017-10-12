@@ -169,9 +169,9 @@ public class Batalha {
 
     public void preparar(Jogador player, Jogador inimigo, int navio, int habilidade) {
         if (player.getNavio()[navio].energia >= 5) {
-            player.getNavio()[navio].consumirEnergia(player.getNavio()[navio]);
             mostrarInimigo(inimigo.verInimigo(inimigo), inimigo);
             if (habilidade == -1) {
+                player.getNavio()[navio].consumirEnergia(player.getNavio()[navio], 5);
                 player.getNavio()[navio].atirar(player, inimigo);
             } else if (navio == 1 && habilidade == 0) {
                 player.getNavio()[navio].usarTorpedo(player, inimigo);
@@ -297,20 +297,35 @@ public class Batalha {
             try {
                 if (navio != 0) {
                     option = JOptionPane.showInputDialog("Habilidades:"
-                            + "\n1 - Atirar"
-                            + "\n2 - " + player.getNavio()[navio].habilidade[0].nome
-                            + "\n3 - " + player.getNavio()[navio].habilidade[1].nome);
+                            + "\nEnergia atual do navio: " + player.getNavio()[navio].energia
+                            + "\n\n ID | Nome(custo) "
+                            + "\n 1  | Atirar(5)"
+                            + "\n 2  | " + player.getNavio()[navio].habilidade[0].nome + "(" + player.getNavio()[navio].habilidade[0].consumo + ")"
+                            + "\n 3  | " + player.getNavio()[navio].habilidade[1].nome + "(" + player.getNavio()[navio].habilidade[1].consumo + ")"
+                            + "\n\nInforme o ID da habilidade desejada:      ");
                     max = 3;
                 } else {
                     option = JOptionPane.showInputDialog("Habilidades:"
-                            + "\n1 - Atirar"
-                            + "\n2 - " + player.getNavio()[navio].habilidade[0].nome);
+                            + "\nEnergia atual do navio: " + player.getNavio()[navio].energia
+                            + "\n\n ID | Nome(custo) "
+                            + "\n1 - Atirar(5)"
+                            + "\n2 - " + player.getNavio()[navio].habilidade[0].nome + "(" + player.getNavio()[navio].habilidade[0].consumo + ")"
+                            + "\n\nInforme o ID da habilidade desejada:      ");
                     max = 2;
                 }
                 habilidade = Integer.parseInt(option);
                 if (habilidade < 1 || habilidade > max) {
                     habilidade = 0;
                     JOptionPane.showMessageDialog(null, "Essa habilidade não existe.");
+                }
+                if (habilidade != 1) {
+                    if (player.getNavio()[navio].getEnergia() < player.getNavio()[navio].getHabilidade()[habilidade - 2].consumo) {
+                        habilidade = 0;
+                        JOptionPane.showMessageDialog(null, "Você não tem energia suficiente para usar essa habilidade.");
+                    } else {
+                        player.getNavio()[navio].consumirEnergia(player.getNavio()[navio],
+                                player.getNavio()[navio].habilidade[habilidade - 2].consumo);
+                    }
                 }
             } catch (NumberFormatException e) {
                 if (option == null) {
@@ -342,7 +357,7 @@ public class Batalha {
                 if (navio < 1 || navio > 7) {
                     JOptionPane.showMessageDialog(null, "Não um navio com esse ID.");
                     navio = 0;
-                } else if (player.getNavio()[navio-1].status == 0) {
+                } else if (player.getNavio()[navio - 1].status == 0) {
                     JOptionPane.showMessageDialog(null, "Este navio está sem energia.");
                     navio = 0;
                 }
