@@ -21,14 +21,6 @@ public class Jogo {
         player[1] = new Jogador("P1", "Penczkoski 01", "nasc");
         player[2] = new Jogador("P2", "Vanjura 02", "nasc");
         player[3] = new Jogador("P3", "Penczkoski 02", "nasc");
-        player[0].getNavio()[0].status = 0;
-        player[1].getNavio()[0].status = 0;
-        player[2].getNavio()[0].status = 0;
-        player[3].getNavio()[0].status = 0;
-        System.out.println(player[0].getNavio()[0].status);
-        System.out.println(player[1].getNavio()[0].status);
-        System.out.println(player[2].getNavio()[0].status);
-        System.out.println(player[3].getNavio()[0].status);
         Batalha battle = new Batalha();
         battle.executar(player);
     }
