@@ -47,12 +47,12 @@ public class Navio {
         this.habilidade[1] = h1;
     }
 
-    public void consumirEnergia(Navio navio) {
-        navio.energia -= 5;
+    public void consumirEnergia(Navio navio,int quantidade) {
+        navio.energia -= quantidade;
     }
 
-    public void ganharEnergia(Navio navio, int quant) {
-        navio.energia += quant;
+    public void ganharEnergia(Navio navio, int quantidade) {
+        navio.energia += quantidade;
     }
 
     public void usarPulsoEletromagnetico(Jogador inimigo) {
