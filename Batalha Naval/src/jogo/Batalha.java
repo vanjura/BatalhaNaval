@@ -21,6 +21,7 @@ public class Batalha {
         do {
             for (int i = 0; i < 4; i++) {
                 if (player[t[i]].getTabuleiro().getSituacao() == 0) {
+                    testarNavio(player[t[i]]);
                     JOptionPane.showMessageDialog(null, "Vez de " + player[t[i]].getApelido());
                     navio = escolherNavio(player[t[i]]);
                     if (navio != 6) {
@@ -50,6 +51,34 @@ public class Batalha {
             }
         } while (teste(player[0], player[1], player[2], player[3]) > 1);
         ganhador(player[0], player[1], player[2], player[3]);
+    }
+    
+    public void testarNavio(Jogador player){
+        int existe = 0;
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 14; j++) {
+                for (int k = 0; k < 14; k++) {
+                    if(player.getTabuleiro().getPosMatN(j, k).equals(player.getNavio()[i].getInicial())){
+                        player.getNavio()[i].status = 1;
+                        existe = 1;
+                        break;
+                    } else {
+                        player.getNavio()[i].status = 0;
+                    }
+                }
+                if(existe == 1){
+                    break;
+                }
+            }
+            if(existe == 0){
+                player.getNavio()[i].energia = 0;
+            }
+            existe = 0;
+            if(player.getNavio()[i].energia <= 0){
+                player.getNavio()[i].energia = 0;
+                player.getNavio()[i].status = 0;
+            }
+        }
     }
 
     public void ganhador(Jogador player1, Jogador player2, Jogador player3, Jogador player4) {
@@ -355,10 +384,10 @@ public class Batalha {
                         + "\n\nInforme o ID do navio desejado:");
                 navio = Integer.parseInt(option);
                 if (navio < 1 || navio > 7) {
-                    JOptionPane.showMessageDialog(null, "Não um navio com esse ID.");
+                    JOptionPane.showMessageDialog(null, "Não existe um navio com esse ID.");
                     navio = 0;
                 } else if (player.getNavio()[navio - 1].status == 0) {
-                    JOptionPane.showMessageDialog(null, "Este navio está sem energia.");
+                    JOptionPane.showMessageDialog(null, "Este navio está inativo.");
                     navio = 0;
                 }
             } catch (NumberFormatException e) {
