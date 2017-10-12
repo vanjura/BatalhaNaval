@@ -19,7 +19,7 @@ public class Batalha {
         Jogador inimigo;
         t = randomizar();
         do {
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 4; i++) {
                 if (player[t[i]].getTabuleiro().getSituacao() == 0) {
                     testarNavio(player[t[i]]);
                     JOptionPane.showMessageDialog(null, "Vez de " + player[t[i]].getApelido());
