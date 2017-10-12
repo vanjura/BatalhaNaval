@@ -12,7 +12,8 @@ package jogo;
 public class Sonar extends Habilidade {
     
     public Sonar() {
-        super("Sonar", "descricao", "tipo");
+        super("Sonar", "Revela a posição de qualquer navio (incluindo\n"
+                + "submarinos) que estejam na área afetada.", "Reconhecimento (5x5)");
     }
     
 }

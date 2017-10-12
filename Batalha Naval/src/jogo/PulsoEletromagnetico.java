@@ -12,7 +12,8 @@ package jogo;
 public class PulsoEletromagnetico extends Habilidade{
     
     public PulsoEletromagnetico() {
-        super("Pulso Eletromagnetico", "descricao", "tipo");
+        super("Pulso Eletromagnetico", "Desabilita todos os navios de um\n"
+                + "jogador por duas rodadas.", "Cuzona (14x14)");
     }
     
 }

@@ -12,7 +12,10 @@ package jogo;
 public class Foguetes extends Habilidade {
     
     public Foguetes() {
-        super("Foguetes", "descricao", "tipo");
+        super("Foguetes", "Lança foguetes aleatórios em uma grande área. Cada\n"
+                + "quadrado na área tem uma chance de 50% de ser atingido por um\n"
+                + "foguete. Altamente eficaz contra navios grandes, como o Porta-\n"
+                + "Aviões, o Cruzador, e o Destroyer.", "Agressivo (5x5)");
     }
     
 }

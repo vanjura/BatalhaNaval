@@ -12,7 +12,8 @@ package jogo;
 public class Radar extends Habilidade{
     
     public Radar() {
-        super("Radar", "descricao", "tipo");
+        super("Radar", "Esta habilidade encontra navios na superfície em uma\n"
+                + "grande área, porém não pode encontrar submarinos.", "Reconhecimento (5x5)");
     }
     
 }
