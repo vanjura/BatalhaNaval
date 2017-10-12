@@ -19,7 +19,7 @@ public class Batalha {
         Jogador inimigo;
         t = randomizar();
         do {
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 2; i++) {
                 if (player[t[i]].getTabuleiro().getSituacao() == 0) {
                     testarNavio(player[t[i]]);
                     JOptionPane.showMessageDialog(null, "Vez de " + player[t[i]].getApelido());
@@ -77,6 +77,9 @@ public class Batalha {
             if(player.getNavio()[i].energia <= 0){
                 player.getNavio()[i].energia = 0;
                 player.getNavio()[i].status = 0;
+            }
+            if(player.getNavio()[i].energia > 1000){
+                player.getNavio()[i].energia = 1000;
             }
         }
     }
@@ -337,8 +340,8 @@ public class Batalha {
                     option = JOptionPane.showInputDialog("Habilidades:"
                             + "\nEnergia atual do navio: " + player.getNavio()[navio].energia
                             + "\n\n ID | Nome(custo) "
-                            + "\n1 - Atirar(5)"
-                            + "\n2 - " + player.getNavio()[navio].habilidade[0].nome + "(" + player.getNavio()[navio].habilidade[0].consumo + ")"
+                            + "\n 1  | Atirar(5)"
+                            + "\n 2  | " + player.getNavio()[navio].habilidade[0].nome + "(" + player.getNavio()[navio].habilidade[0].consumo + ")"
                             + "\n\nInforme o ID da habilidade desejada:      ");
                     max = 2;
                 }
