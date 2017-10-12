@@ -12,7 +12,7 @@ package jogo;
 public class BombardeioLinear extends Habilidade{
     
     public BombardeioLinear() {
-        super("Bombardeio Linear", "descricao", "tipo");
+        super("Bombardeio Linear", "Atinge todos os quadrados ao longo de uma linha ou coluna.", "Agressivo (8x1 ou 1x8)");
     }
     
 }

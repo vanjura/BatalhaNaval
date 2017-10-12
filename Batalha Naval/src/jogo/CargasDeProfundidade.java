@@ -12,7 +12,9 @@ package jogo;
 public class CargasDeProfundidade extends Habilidade{
     
     public CargasDeProfundidade() {
-        super("Cargas de Profundidade", "descricao", "tipo");
+        super("Cargas de Profundidade", "Esta habilidade atinge uma área\n"
+                + "enorme, porém só atinge submarinos. Todos os outros navios e\n"
+                + "quadrados serão ignorados.", "Agressivo contra submarinos (5x5)");
     }
     
 }
