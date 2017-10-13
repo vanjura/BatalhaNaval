@@ -52,13 +52,13 @@ public class Batalha {
         } while (teste(player[0], player[1], player[2], player[3]) > 1);
         ganhador(player[0], player[1], player[2], player[3]);
     }
-    
-    public void testarNavio(Jogador player){
+
+    public void testarNavio(Jogador player) {
         int existe = 0;
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 14; j++) {
                 for (int k = 0; k < 14; k++) {
-                    if(player.getTabuleiro().getPosMatN(j, k).equals(player.getNavio()[i].getInicial())){
+                    if (player.getTabuleiro().getPosMatN(j, k).equals(player.getNavio()[i].getInicial())) {
                         player.getNavio()[i].status = 1;
                         existe = 1;
                         break;
@@ -66,19 +66,19 @@ public class Batalha {
                         player.getNavio()[i].status = 0;
                     }
                 }
-                if(existe == 1){
+                if (existe == 1) {
                     break;
                 }
             }
-            if(existe == 0){
+            if (existe == 0) {
                 player.getNavio()[i].energia = 0;
             }
             existe = 0;
-            if(player.getNavio()[i].energia <= 0){
+            if (player.getNavio()[i].energia <= 0) {
                 player.getNavio()[i].energia = 0;
                 player.getNavio()[i].status = 0;
             }
-            if(player.getNavio()[i].energia > 1000){
+            if (player.getNavio()[i].energia > 1000) {
                 player.getNavio()[i].energia = 1000;
             }
         }
@@ -131,68 +131,74 @@ public class Batalha {
             }
         }
         teste = player1.getSituacao() + player2.getSituacao() + player3.getSituacao() + player4.getSituacao();
-        System.out.println("---------------TESTE :" + teste);
         return teste;
     }
 
     public void usarEscudo(Jogador player) {
-        int x = -1, y = -1, c;
-        String texto, option;
-        texto = player.verJogador(player);
-        mostrarJogador(texto);
-        player.getNavio()[0].energia -= 5;
-        JOptionPane.showMessageDialog(null, player.getNavio()[0].habilidade[0].nome
-                + "\n Descrição: " + player.getNavio()[0].habilidade[0].descricao
-                + "\n Tipo de destruição: " + player.getNavio()[0].habilidade[0].tipo
-        );
+        int linha = -1;
+        int coluna = -1;
+        int c = 1;
+        String option;
+        player.getNavio()[0].consumirEnergia(player.getNavio()[0], player.getNavio()[0].habilidade[0].consumo);
         do {
+            c = 1;
+            mostrarJogador(player.verJogador(player));
             do {
                 option = JOptionPane.showInputDialog("Informe a linha do meio de onde irá usar o Escudo:");
                 try {
-                    x = Integer.parseInt(option) - 1;
-                    if (x < 1 || x > 13) {
-                        x = -1;
+                    linha = Integer.parseInt(option) - 1;
+                    if (linha < 1 || linha > 13) {
+                        linha = -1;
                         JOptionPane.showMessageDialog(null, "Habilidade fora do limite do tabuleiro, informe outro número.");
                     }
                 } catch (NumberFormatException e) {
                     if (option == null) {
                         System.exit(0);
                     } else {
-                        x = -1;
+                        linha = -1;
                         JOptionPane.showMessageDialog(null, "Informe somente números.");
                     }
                 }
-            } while (x == -1);
+            } while (linha == -1);
             do {
                 option = JOptionPane.showInputDialog("Informe a coluna do meio de onde irá usar o Escudo:");
                 try {
-                    y = Integer.parseInt(option) - 1;
-                    if (y < 1 || y > 13) {
-                        y = -1;
+                    coluna = Integer.parseInt(option) - 1;
+                    if (coluna < 1 || coluna > 13) {
+                        coluna = -1;
                         JOptionPane.showMessageDialog(null, "Habilidade fora do limite do tabuleiro, informe outro número.");
                     }
                 } catch (NumberFormatException e) {
                     if (option == null) {
                         System.exit(0);
                     } else {
-                        y = -1;
+                        coluna = -1;
                         JOptionPane.showMessageDialog(null, "Informe somente números.");
                     }
                 }
-            } while (y == -1);
-            if ("C".equals(player.getTabuleiro().getPosMatN(x, y))) {
-                JOptionPane.showMessageDialog(null, "Você não pode colocar um escudo em uma Corveta.");
-                c = 0;
-            } else {
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 3; j++) {
-                        player.getTabuleiro().setPosMatV((i + x) - 1, (j + y) - 1, 5);
+            } while (coluna == -1);
+            for (int i = linha - 1; i < linha + 2; i++) {
+                for (int j = coluna - 1; j < coluna + 2; j++) {
+                    if ("C".equals(player.getTabuleiro().getPosMatN(i, j))) {
+                        c = 0;
+                        break;
                     }
                 }
-                c = 1;
+                if (c == 0) {
+                    break;
+                }
+            }
+            if (c == 1) {
+                for (int i = linha - 1; i < linha + 2; i++) {
+                    for (int j = coluna - 1; j < coluna + 2; j++) {
+                        player.getTabuleiro().setPosMatV(i, j, 5);
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Você não pode colocar um escudo sob uma Corveta. Informe outra coordenada.");
             }
         } while (c == 0);
-        player.mostrarTabuleiroV();
+        mostrarJogador(player.verJogador(player));
     }
 
     public void chamarHabilidade(Jogador player, int navio, int habilidade) {
@@ -229,6 +235,7 @@ public class Batalha {
         } else {
             JOptionPane.showMessageDialog(null, "Navio sem energia suficiente, a habilidade falhou.");
         }
+        mostrarInimigo(inimigo.verInimigo(inimigo), inimigo);
     }
 
     public void mostrarJogador(String texto) {
@@ -389,8 +396,8 @@ public class Batalha {
                 if (navio < 1 || navio > 7) {
                     JOptionPane.showMessageDialog(null, "Não existe um navio com esse ID.");
                     navio = 0;
-                } else if(navio == 7){
-                    return navio -1;
+                } else if (navio == 7) {
+                    return navio - 1;
                 } else if (player.getNavio()[navio - 1].status == 0) {
                     JOptionPane.showMessageDialog(null, "Este navio está inativo.");
                     navio = 0;
