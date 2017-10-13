@@ -156,15 +156,6 @@ public class Jogador {
         this.navio[5].ganharEnergia(navio[5], 30);
     }
 
-    public void mostrarTabuleiroV() {
-        for (int i = 0; i < this.tabuleiro.MAX; i++) {
-            for (int j = 0; j < this.tabuleiro.MAX; j++) {
-                System.out.print(" " + this.tabuleiro.getMatV()[i][j]);
-            }
-            System.out.println("");
-        }
-    }
-
     public Navio[] getNavio() {
         return navio;
     }
