@@ -55,7 +55,11 @@ public class Navio {
 
     public void usarPulsoEletromagnetico(Jogador inimigo) {
         inimigo.getTabuleiro().setSituacao(2);
-        JOptionPane.showMessageDialog(null, "Pulso Eletromagnético usado com sucesso em " + inimigo.getApelido() + " que deverá ficar " + inimigo.getTabuleiro().getSituacao() + " rodadas sem jogar.");
+        JOptionPane.showMessageDialog(null, "Pulso Eletromagnético usado com sucesso em " 
+                + inimigo.getApelido() 
+                + " que deverá ficar " 
+                + inimigo.getTabuleiro().getSituacao() 
+                + " rodadas sem jogar.");
     }
 
     public void usarBombardeioLinear(Jogador player, Jogador inimigo) {
@@ -116,7 +120,9 @@ public class Navio {
             }
         }
         if (acerto == 1) {
-            JOptionPane.showMessageDialog(null, "Você acertou um navio inimigo e ganhou +100 de energia em " + player.getNavio()[5].nome + ".");
+            JOptionPane.showMessageDialog(null, "Você acertou um navio inimigo e ganhou +100 de energia em " 
+                    + player.getNavio()[5].nome 
+                    + ".");
             this.ganharEnergia(this, 100);
         } else if (escudo == 1) {
             JOptionPane.showMessageDialog(null, "Você acertou um escudo inimigo.");
@@ -169,7 +175,7 @@ public class Navio {
         for (int i = linha; i < linha + 2; i++) {
             for (int j = coluna; j < coluna + 2; j++) {
                 if (inimigo.getTabuleiro().getPosMatV(linha, coluna) == 0) {
-                    if (!"-".equals(inimigo.getTabuleiro().getPosMatN(i, j)) && !"X".equals(inimigo.getTabuleiro().getPosMatN(i, j))) {
+                    if (!"-".equals(inimigo.getTabuleiro().getPosMatN(i, j)) || !"X".equals(inimigo.getTabuleiro().getPosMatN(i, j))) {
                         inimigo.getTabuleiro().setPosMatN(i, j, "X");
                         acerto = 1;
                     } else {
@@ -197,12 +203,109 @@ public class Navio {
         int coluna;
         int escudo = 0;
         int acerto = 0;
-        String opcao;
 
         linha = pegarCoordenada(3, inimigo.getNavio()[4].habilidade[1], "linha");
         coluna = pegarCoordenada(3, inimigo.getNavio()[4].habilidade[1], "coluna");
         for (int i = linha - 1; i < linha + 2; i++) {
             for (int j = coluna - 1; j < coluna + 2; j++) {
+                if (inimigo.getTabuleiro().getPosMatV(linha, coluna) == 0) {
+                    if (!"-".equals(inimigo.getTabuleiro().getPosMatN(i, j)) || !"X".equals(inimigo.getTabuleiro().getPosMatN(i, j))) {
+                        inimigo.getTabuleiro().setPosMatN(i, j, "X");
+                        acerto = 1;
+                    } else {
+                        inimigo.getTabuleiro().setPosMatN(i, j, "X");
+                    }
+                } else {
+                    escudo = 1;
+                    inimigo.getTabuleiro().setPosMatV(linha, coluna, inimigo.getTabuleiro().getPosMatV(linha, coluna) - 1);
+                }
+            }
+        }
+        if (acerto == 1) {
+            JOptionPane.showMessageDialog(null, "Você acertou um navio inimigo e ganhou +100 de energia em " + player.getNavio()[5].nome + ".");
+            this.ganharEnergia(this, 100);
+        } else if (escudo == 1) {
+            JOptionPane.showMessageDialog(null, "Você acertou um escudo inimigo.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Você errou e " + inimigo.getApelido() + "ganhou +30 em cada navio.");
+            inimigo.jogadorErrou();
+        }
+    }
+
+    public void usarRadar(Jogador inimigo) {
+        int linha;
+        int coluna;
+        int detectou = 0;
+        
+        linha = pegarCoordenada(5, inimigo.getNavio()[3].habilidade[1], "linha");
+        coluna = pegarCoordenada(5, inimigo.getNavio()[3].habilidade[1], "coluna");
+        for (int i = linha - 2; i < linha + 3; i++) {
+            for (int j = coluna - 2; j < coluna + 3; j++) {
+                if ("S".equals(inimigo.getTabuleiro().getPosMatN(i, j))) {
+                    inimigo.getTabuleiro().setPosMatH(i, j, "N");
+                    detectou = 1;
+                }
+            }
+        }
+        
+        if (detectou == 1) {
+            JOptionPane.showMessageDialog(null, "Seu radar detectou um navio.");
+        }else{
+            JOptionPane.showMessageDialog(null, "Nenhum navio detectado.");
+        }
+    }
+
+    public void usarCargasDeProfundidade(Jogador player, Jogador inimigo) {
+        int linha;
+        int coluna;
+        int acerto = 0;
+        int escudo = 0;
+        
+        linha = pegarCoordenada(5, inimigo.getNavio()[3].habilidade[0], "linha");
+        coluna = pegarCoordenada(5, inimigo.getNavio()[3].habilidade[0], "coluna");
+        for (int i = linha - 2; i < linha + 3; i++) {
+            for (int j = coluna - 2; j < coluna + 3; j++) {
+                if (inimigo.getTabuleiro().getPosMatV(linha, coluna) == 0) {
+                    if ("S".equals(inimigo.getTabuleiro().getPosMatN(i, j))) {
+                        inimigo.getTabuleiro().setPosMatN(i, j, "X");
+                        acerto = 1;
+                    }
+                } else {
+                    escudo = 1;
+                    inimigo.getTabuleiro().setPosMatV(linha, coluna, inimigo.getTabuleiro().getPosMatV(linha, coluna) - 1);
+                }
+            }
+        }
+        
+        if (acerto == 1) {
+            JOptionPane.showMessageDialog(null, "Você acertou um submarino inimigo e ganhou +100 de energia em " + player.getNavio()[5].nome + ".");
+            this.ganharEnergia(this, 100);
+        } else if (escudo == 1) {
+            JOptionPane.showMessageDialog(null, "Você acertou um escudo inimigo.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Você errou e " + inimigo.getApelido() + "ganhou +30 em cada navio.");
+            inimigo.jogadorErrou();
+        }
+    }
+
+    public void usarMissilBalistico(Jogador player, Jogador inimigo) {
+        int linha;
+        int coluna;
+        int acerto = 0;
+        int escudo = 0;
+        
+        for (int i = 0; i < player.getTabuleiro().MAX; i++) {
+            for (int j = 0; j < player.getTabuleiro().MAX; j++) {
+                if ("F".equals(player.getTabuleiro().getPosMatN(i, j))) {
+                    player.getTabuleiro().setPosMatN(i, j, "f");
+                }
+            }
+        }
+        
+        linha = pegarCoordenada(5, inimigo.getNavio()[2].habilidade[1], "linha");
+        coluna = pegarCoordenada(5, inimigo.getNavio()[2].habilidade[1], "coluna");
+        for (int i = linha - 2; i < linha + 3; i++) {
+            for (int j = coluna - 2; j < coluna + 3; j++) {
                 if (inimigo.getTabuleiro().getPosMatV(linha, coluna) == 0) {
                     if (!"-".equals(inimigo.getTabuleiro().getPosMatN(i, j)) && !"X".equals(inimigo.getTabuleiro().getPosMatN(i, j))) {
                         inimigo.getTabuleiro().setPosMatN(i, j, "X");
@@ -211,90 +314,19 @@ public class Navio {
                         inimigo.getTabuleiro().setPosMatN(i, j, "X");
                     }
                 } else {
+                    escudo = 1;
                     inimigo.getTabuleiro().setPosMatV(linha, coluna, inimigo.getTabuleiro().getPosMatV(linha, coluna) - 1);
                 }
             }
         }
+        
         if (acerto == 1) {
-            JOptionPane.showMessageDialog(null, "Você acertou um navio inimigo e ganhou +100 de energia em " + player.getNavio()[5].nome + ".");
+            JOptionPane.showMessageDialog(null, "Você acertou um submarino inimigo e ganhou +100 de energia em " + player.getNavio()[5].nome + ".");
             this.ganharEnergia(this, 100);
-        } else {
+        } else if (escudo == 1) {
             JOptionPane.showMessageDialog(null, "Você acertou um escudo inimigo.");
-            inimigo.jogadorErrou();
-        }
-    }
-
-    public void usarRadar(Jogador inimigo) {
-        int x, y, teste = 0;
-        x = pegarCoordenada(5, inimigo.getNavio()[3].habilidade[1], "linha");
-        y = pegarCoordenada(5, inimigo.getNavio()[3].habilidade[1], "coluna");
-        for (int i = x - 2; i < x + 3; i++) {
-            for (int j = y - 2; j < y + 3; j++) {
-                if ("S".equals(inimigo.getTabuleiro().getPosMatN(i, j))) {
-                    inimigo.getTabuleiro().setPosMatN(i, j, "N");
-                    teste = 1;
-                }
-            }
-        }
-        if (teste == 1) {
-            JOptionPane.showMessageDialog(null, "Seu radar detectou um submarino.");
-        }
-    }
-
-    public void usarCargasDeProfundidade(Jogador player, Jogador inimigo) {
-        int x, y, teste = 0;
-        x = pegarCoordenada(5, inimigo.getNavio()[3].habilidade[0], "linha");
-        y = pegarCoordenada(5, inimigo.getNavio()[3].habilidade[0], "coluna");
-        for (int i = x - 2; i < x + 3; i++) {
-            for (int j = y - 2; j < y + 3; j++) {
-                if (inimigo.getTabuleiro().getPosMatV(x, y) == 0) {
-                    if ("S".equals(inimigo.getTabuleiro().getPosMatN(i, j))) {
-                        inimigo.getTabuleiro().setPosMatN(i, j, "X");
-                        teste = 1;
-                    }
-                } else {
-                    inimigo.getTabuleiro().setPosMatV(x, y, inimigo.getTabuleiro().getPosMatV(x, y) - 1);
-                }
-            }
-        }
-        if (teste == 1) {
-            JOptionPane.showMessageDialog(null, "Você acertou um submarino inimigo.");
-            this.ganharEnergia(this, 100);
         } else {
-            inimigo.jogadorErrou();
-        }
-    }
-
-    public void usarMissilBalistico(Jogador player, Jogador inimigo) {
-        for (int i = 0; i < player.getTabuleiro().MAX; i++) {
-            for (int j = 0; j < player.getTabuleiro().MAX; j++) {
-                if ("F".equals(player.getTabuleiro().getPosMatN(i, j))) {
-                    player.getTabuleiro().setPosMatN(i, j, "f");
-                }
-            }
-        }
-        int x, y, teste = 0;
-        x = pegarCoordenada(5, inimigo.getNavio()[2].habilidade[1], "linha");
-        y = pegarCoordenada(5, inimigo.getNavio()[2].habilidade[1], "coluna");
-        for (int i = x - 2; i < x + 3; i++) {
-            for (int j = y - 2; j < y + 3; j++) {
-                if (inimigo.getTabuleiro().getPosMatV(x, y) == 0) {
-                    if (!"-".equals(inimigo.getTabuleiro().getPosMatN(i, j)) && !"X".equals(inimigo.getTabuleiro().getPosMatN(i, j))) {
-                        inimigo.getTabuleiro().setPosMatN(i, j, "X");
-                        teste = 1;
-                    } else {
-                        inimigo.getTabuleiro().setPosMatN(i, j, "X");
-                    }
-                } else {
-                    inimigo.getTabuleiro().setPosMatV(x, y, inimigo.getTabuleiro().getPosMatV(x, y) - 1);
-                }
-            }
-        }
-        if (teste == 1) {
-            JOptionPane.showMessageDialog(null, "Você acertou um navio inimigo e ganhou +100 de energia com " + this.nome + ".");
-            this.ganharEnergia(this, 100);
-        } else {
-            JOptionPane.showMessageDialog(null, "Você errou e o inimigo ganhou +30 de energia em cada navio.");
+            JOptionPane.showMessageDialog(null, "Você errou e " + inimigo.getApelido() + "ganhou +30 em cada navio.");
             inimigo.jogadorErrou();
         }
     }
@@ -336,7 +368,7 @@ public class Navio {
         for (int i = x - 2; i < x + 3; i++) {
             for (int j = y - 2; j < y + 3; j++) {
                 if (!"-".equals(inimigo.getTabuleiro().getPosMatN(i, j)) && !"X".equals(inimigo.getTabuleiro().getPosMatN(i, j))) {
-                    inimigo.getTabuleiro().setPosMatN(i, j, "N");
+                    inimigo.getTabuleiro().setPosMatH(i, j, "N");
                 }
             }
         }
@@ -363,7 +395,6 @@ public class Navio {
 
     public int pegarCoordenada(int tamanho, Habilidade habilidade, String orientacao) {
         int calc = tamanho / 2;
-        System.out.println("calc = " + calc);
         int coordenada = -1;
         String opcao;
         if (habilidade == null) {
@@ -431,7 +462,6 @@ public class Navio {
             c = JOptionPane.showInputDialog("Informe a linha que deseja usar o Torpedo:");
             try {
                 x = Integer.parseInt(c) - 1;
-                System.out.println(x);
                 if (x < 0 || x > 13) {
                     x = -1;
                     JOptionPane.showMessageDialog(null, "Essa habilidade não pode ser lançada nesse local.");
@@ -448,7 +478,6 @@ public class Navio {
             c = JOptionPane.showInputDialog("Informe a coluna que deseja usar o Torpedo:");
             try {
                 y = Integer.parseInt(c) - 1;
-                System.out.println(y);
                 if (y < 0 || y > 13) {
                     y = -1;
                     JOptionPane.showMessageDialog(null, "Essa habilidade não pode ser lançada nesse local.");
@@ -562,10 +591,13 @@ public class Navio {
         for (int i = linha; i < (linha + 3); i++) {
             for (int j = coluna; j < (coluna + 3); j++) {
                 inimigo.getTabuleiro().setPosMatN(i, j, "X");
-                System.out.println(i + "," + j);
-                System.out.println(inimigo.getTabuleiro().getPosMatN(i, j));
             }
         }
+    }
+    
+    public void mostrarInimigo(String texto, Jogador inimigo) {
+        JOptionPane.showMessageDialog(null, "Tabuleiro atual de " + inimigo.getApelido()
+                + "\n\n" + texto);
     }
 
     public int getEnergia() {
