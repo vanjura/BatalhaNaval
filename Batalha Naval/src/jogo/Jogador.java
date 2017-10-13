@@ -5,6 +5,7 @@
  */
 package jogo;
 
+import javax.swing.JOptionPane;
 /**
  *
  * @author Vanjura
@@ -17,6 +18,7 @@ public class Jogador {
     private Tabuleiro tabuleiro;
     private Navio navio[];
     private int situacao;
+    private String jogador;
 
 
     public int getSituacao() {
@@ -27,11 +29,12 @@ public class Jogador {
         this.situacao = situacao;
     }
 
-    public Jogador(String nome, String apelido, String nasc) {
+    public Jogador(String jogador) {
+        this.jogador = jogador;
         this.navio = new Navio[6];
-        this.nome = nome;
-        this.apelido = apelido;
-        this.nasc = nasc;
+        this.nome = coletarNome(jogador);
+        this.apelido = coletarApelido(jogador);
+        this.nasc = coletarNasc(jogador);
         this.tabuleiro = new Tabuleiro();
         this.navio[0] = new Corveta();
         this.navio[1] = new Submarino();
@@ -45,6 +48,51 @@ public class Jogador {
         this.preencheTabuleiro(navio[3]);
         this.preencheTabuleiro(navio[4]);
         this.preencheTabuleiro(navio[5]);
+    }
+    
+     private String coletarNasc(String jogador){
+        String nascimento = null;
+        do{
+            nascimento = JOptionPane.showInputDialog(jogador + " informe sua data de nascimento: ");
+            if("".equals(nascimento)){
+                JOptionPane.showMessageDialog(null, "Esse campo não pode estar vazio.");
+            }
+        }while("".equals(nascimento));
+        if (nascimento == null){
+            System.exit(0);
+        }
+        System.out.println(nascimento);
+        return nascimento;
+    }
+    
+    private String coletarApelido(String jogador){
+        String nick = null;
+        do{
+            nick = JOptionPane.showInputDialog(jogador + " informe um apelido: ");
+            if("".equals(nick)){
+                JOptionPane.showMessageDialog(null, "Esse campo não pode estar vazio.");
+            }
+        }while("".equals(nick));
+        if (nick == null){
+            System.exit(0);
+        }
+        System.out.println(nick);
+        return nick;
+    }
+    
+    private String coletarNome(String jogador){
+        String name = null;
+        do{
+            name = JOptionPane.showInputDialog(jogador + " informe seu nome: ");
+            if("".equals(name)){
+                JOptionPane.showMessageDialog(null, "Esse campo não pode estar vazio.");
+            }
+        }while("".equals(name));
+        if (name == null){
+            System.exit(0);
+        }
+        System.out.println(name);
+        return name;
     }
 
     public String verJogador(Jogador player) {
