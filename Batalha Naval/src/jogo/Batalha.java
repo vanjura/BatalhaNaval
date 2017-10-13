@@ -14,9 +14,9 @@ import javax.swing.JOptionPane;
 public class Batalha {
 
     public void executar(Jogador player[]) {
-        int t[];
-        int navio, habilidade;
-        Jogador inimigo;
+        int t[]; //Utilizado para aleatorizar a ordem dos players;
+        int navio, habilidade; //Utilizados para localização nos vetores de navio e habilidade;
+        Jogador inimigo; //Criado para facilitar a localização e execução de comandos de PvP;
         t = randomizar();
         do {
             for (int i = 0; i < 4; i++) {
@@ -24,7 +24,7 @@ public class Batalha {
                     testarNavio(player[t[i]]);
                     JOptionPane.showMessageDialog(null, "Vez de " + player[t[i]].getApelido());
                     navio = escolherNavio(player[t[i]]);
-                    if (navio != 6) {
+                    if (navio != 6) { //também pode ser utilizado navio < 6
                         habilidade = escolherHabilidade(player[t[i]], navio);
                         if (habilidade != -1) {
                             chamarHabilidade(player[t[i]], navio, habilidade);
