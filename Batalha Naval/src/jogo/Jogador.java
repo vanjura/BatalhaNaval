@@ -48,26 +48,42 @@ public class Jogador {
     }
 
     public String verJogador(Jogador player) {
-        String texto = "  1  2  3  4  5  6  7  8  9  10 11 12 13 14\n";
+        String texto = "    1  2  3  4  5  6  7  8  9  10 11 12 13 14\n";
         for (int i = 0; i < player.tabuleiro.MAX; i++) {
-            for (int j = 0; j < player.tabuleiro.MAX; j++) {
-                texto += "  " + player.tabuleiro.getPosMatN(i, j);
+            if(i<9){
+                texto += (i+1) + " ";
+            } else{
+                texto += (i+1);
             }
-            texto += "  " + (i + 1) + "      \n";
+            for (int j = 0; j < player.tabuleiro.MAX; j++) {
+                if(player.tabuleiro.getPosMatV(i, j) > 0){
+                    texto += " e" + player.tabuleiro.getPosMatN(i, j);
+                }else{
+                    texto += "  " + player.tabuleiro.getPosMatN(i, j);
+                }
+            }
+            texto += "      \n";
         }
         texto += "\nLegenda:"
+                + "\ne = Escudo"
                 + "\nC = Corveta"
                 + "\nS = Submarino"
                 + "\nF = Fragata"
                 + "\nD = Destroyer"
                 + "\nR = Crusador"
-                + "\nP = Porta Aviões";
+                + "\nP = Porta Aviões"
+                + "\nX = Local Atingido";
         return texto;
     }
 
     public String verInimigo(Jogador inimigo) {
-        String texto = "  1  2  3  4  5  6  7  8  9  10 11 12 13 14\n";
+        String texto = "    1  2  3  4  5  6  7  8  9  10 11 12 13 14\n";
         for (int i = 0; i < inimigo.tabuleiro.MAX; i++) {
+            if(i<9){
+                texto += (i+1) + " ";
+            } else{
+                texto += (i+1);
+            }
             for (int j = 0; j < inimigo.tabuleiro.MAX; j++) {
                 if ("-".equals(inimigo.tabuleiro.getPosMatN(i, j))) {
                     texto += "  " + inimigo.tabuleiro.getPosMatN(i, j);
@@ -75,18 +91,22 @@ public class Jogador {
                     texto += "  " + inimigo.tabuleiro.getPosMatN(i, j);
                 } else if ("f".equals(inimigo.tabuleiro.getPosMatN(i, j))) {
                     texto += "  F";
-                } else if("N".equals(inimigo.tabuleiro.getPosMatN(i, j))) {
-                    texto += "  N";
+                } else if("N".equals(inimigo.tabuleiro.getPosMatH(i, j))) {
+                    texto += "  " + inimigo.tabuleiro.getPosMatN(i, j);
                 }else {
                     texto += "  -";
                 }
             }
-            texto += "  " + (i + 1) + "      \n";
+            texto += "      \n";
         }
         texto += "\nLegenda:"
-                + "\nN = Navio dectado (não derrubado)."
-                + "\nF = Fragata detectada."
-                + "\nX = Local atingido.";
+                + "\nC = Corveta"
+                + "\nS = Submarino"
+                + "\nF = Fragata"
+                + "\nD = Destroyer"
+                + "\nR = Crusador"
+                + "\nP = Porta Aviões"
+                + "\nX = Local Atingido";
         return texto;
     }
 
