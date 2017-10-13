@@ -389,6 +389,8 @@ public class Batalha {
                 if (navio < 1 || navio > 7) {
                     JOptionPane.showMessageDialog(null, "Não existe um navio com esse ID.");
                     navio = 0;
+                } else if(navio == 7){
+                    return navio -1;
                 } else if (player.getNavio()[navio - 1].status == 0) {
                     JOptionPane.showMessageDialog(null, "Este navio está inativo.");
                     navio = 0;
